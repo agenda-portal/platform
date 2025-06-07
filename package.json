@@ -1,8 +1,8 @@
 {
   "name": "@agenda-portal/platform",
   "private": true,
-  "scripts": {},
-  "devDependencies": {
-    "typescript": "5.8.3"
-  }
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {}
 }
