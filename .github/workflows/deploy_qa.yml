@@ -22,3 +22,25 @@ jobs:
           node-version: "22"
       - name: Install dependencies
         run: npm ci
+  deploy-api:
+    name: Deploy API
+    runs-on: ubuntu-latest
+    environment:
+      name: QA
+    needs: install
+    steps:
+      - name: Deploy api to QA environment
+        run: |
+          echo "Deploying API to production..."
+          # Add your deployment commands here, e.g., using SSH or a cloud provider CLI
+  deploy-web:
+    name: Deploy Web
+    runs-on: ubuntu-latest
+    environment:
+      name: QA
+    needs: install
+    steps:
+      - name: Deploy web to QA environment
+        run: |
+          echo "Deploying web application to production..."
+          # Add your deployment commands here, e.g., using SSH or a cloud provider CLI
