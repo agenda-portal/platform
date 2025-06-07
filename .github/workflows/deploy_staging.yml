@@ -4,45 +4,25 @@ on:
     branches:
       - dev
 jobs:
-  install:
+  deploy:
     name: Install dependencies
     runs-on: ubuntu-latest
-    outputs:
-      cache-hit: ${{ steps.cache.outputs.cache-hit }}
+    environment:
+      name: Staging
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        id: cache
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: "npm"
       - name: Install dependencies
-        run: npm ci
-  deploy-api:
-    name: Deploy API
-    runs-on: ubuntu-latest
-    environment:
-      name: Staging
-    needs: install
-    steps:
-      - name: Deploy api to staging environment
+        run: npm ci --workspaces
+      - name: Deploy API to Staging environment
         run: |
-          echo "Deploying API to production..."
+          echo "Deploying API to staging..."
           # Add your deployment commands here, e.g., using SSH or a cloud provider CLI
-  deploy-web:
-    name: Deploy Web
-    runs-on: ubuntu-latest
-    environment:
-      name: Staging
-    needs: install
-    steps:
-      - name: Deploy web to staging environment
+      - name: Deploy web to Staging environment
         run: |
-          echo "Deploying web application to production..."
+          echo "Deploying web application to staging..."
           # Add your deployment commands here, e.g., using SSH or a cloud provider CLI
